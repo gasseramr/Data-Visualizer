@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualizer - Sorting & Huffman Coding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<body>
+    <div class="container">
+        <header>
+            <h1>Algorithm 12th Project </h1>
+            <p>Visualize sorting algorithms and Huffman coding compression in real-time</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active-sort" data-tab="sorting">Sorting Algorithms</button>
+            <button class="tab-btn" data-tab="huffman">Huffman Coding</button>
+        </div>
+        
+        <!-- Sorting Visualizer Panel -->
+        <div id="sorting" class="panel active">
+            <div class="controls">
+                <div class="array-controls">
+                    <h3>Array Controls</h3>
+                    <div style="margin-top: 10px;">
+                        <input type="number" id="arraySize" min="5" max="100" value="20">
+                        <button class="button" id="generateArray">Generate Random Array</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="customArray" placeholder="Enter your Numbers" style="width: 200px; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                        <button class="button" id="useCustomArray">Use Custom Array</button>
+                    </div>
+                </div>
+                
+                <div class="algorithm-controls">
+                    <h3>Algorithm</h3>
+                    <div style="margin-top: 10px;">
+                        <select id="algorithm" style="width: 100%;">
+                            <option value="bubble">Bubble Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="selection">Selection Sort</option>
+                            <option value="merge">Merge Sort</option>
+                            <option value="quick">Quick Sort</option>
+                            <option value="heap">Heap Sort</option>
+                            <option value="counting">Counting Sort</option>
+                            <option value="radix">Radix Sort</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="speed-controls">
+                    <h3>Animation Speed</h3>
+                    <div style="margin-top: 10px;">
+                        <input type="range" id="speed" min="1" max="100" value="50">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Slow</span>
+                            <span>Medium</span>
+                            <span>Fast</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-controls" style="margin-top: 20px; text-align: center;">
+                <button class="button" id="startSort">Start Sorting</button>
+                <button class="button alt" id="pauseSort" disabled>Pause</button>
+                <button class="button alt" id="resetSort">Reset</button>
+                <button class="button alt" id="stepForward" disabled>Step Forward</button>
+            </div>
+            
+            <div class="array-container" id="arrayContainer"></div>
+            
+            <div id="algorithmInfo">
+                <h3>Algorithm Information</h3>
+                <div id="currentAlgorithm" style="margin-top: 10px;">
+                    <h4>Bubble Sort</h4>
+                    <p>Bubble Sort is a simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.</p>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Time & Space Complexity</h3>
+                <table class="complexity-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithm</th>
+                            <th>Best Case</th>
+                            <th>Average Case</th>
+                            <th>Worst Case</th>
+                            <th>Space Complexity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bubble Sort</td>
+                            <td>O(n)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Insertion Sort</td>
+                            <td>O(n)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Selection Sort</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Merge Sort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td>Quick Sort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n²)</td>
+                            <td>O(log n)</td>
+                        </tr>
+                        <tr>
+                            <td>Heap Sort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td>Counting Sort</td>
+                            <td>O(n+k)</td>
+                            <td>O(n+k)</td>
+                            <td>O(n+k)</td>
+                            <td>O(n+k)</td>
+                        </tr>
+                        <tr>
+                            <td>Radix Sort</td>
+                            <td>O(nk)</td>
+                            <td>O(nk)</td>
+                            <td>O(nk)</td>
+                            <td>O(n+k)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Huffman Coding Panel -->
+        <div id="huffman" class="panel">
+            <div class="huffman-controls">
+                <h3>Input Text</h3>
+                <textarea id="inputText" placeholder="Enter text to compress using Huffman coding (e.g., 'abacabad')"></textarea>
+                <button class="button huff" id="encodeText">Build Huffman Tree & Encode</button>
+                <button class="button huff alt" id="resetHuffman">Reset</button>
+            </div>
+            
+            <div class="huffman-results">
+                <div class="result-card">
+                    <h3>Character Frequency</h3>
+                    <div id="frequencyTable"></div>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Huffman Codes</h3>
+                    <div id="codesTable"></div>
+                </div>
+            </div>
+            
+            <div class="result-card" style="margin-top: 20px;">
+                <h3>Huffman Tree</h3>
+                <div id="huffmanTree"></div>
+            </div>
+            
+            <div class="huffman-results" style="margin-top: 20px;">
+                <div class="result-card">
+                    <h3>Encoded Text</h3>
+                    <div class="encoded-text" id="encodedText"></div>
+                    <div style="margin-top: 10px;">
+                        <span id="compressionRatio"></span>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Decoded Text</h3>
+                    <div class="decoded-text" id="decodedText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
