@@ -16,6 +16,8 @@ Interactive, browser-based visualizations for classic sorting algorithms and Huf
 - Option 2 (local server):
   - Python: `python -m http.server 8000` then open `http://localhost:8000/`
   - VS Code: use the Live Server extension to serve the folder
+- OPTION 3 (UPLOADED)
+   -https://data-visualizer-fawn.vercel.app/
 
 ## Usage
 
